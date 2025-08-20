@@ -7,7 +7,12 @@ import {
 } from './model/types';
 
 class ServicesRepository {
-  getServicesList = cache((): Promise<ServiceListElement[]> => dbClient.service.findMany());
+  getServicesList = cache(
+    (): Promise<ServiceListElement[]> =>
+      dbClient.service.findMany({
+        orderBy: { name: 'desc' },
+      }),
+  );
   createServiceElement = (command: CreateServiceListElementCommand): Promise<ServiceListElement> =>
     dbClient.service.create({ data: command });
   deleteServiceElement = (command: DeleteServiceListElementCommand) =>

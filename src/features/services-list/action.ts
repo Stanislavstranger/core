@@ -5,10 +5,10 @@ import { CreateServiceListElementCommand } from './model/types';
 import { servicesRepository } from './services.repository';
 
 export const createServiceAction = async (
-  revaidatePagePath: string,
+  revalidatePagePath: string,
   command: CreateServiceListElementCommand,
 ) => {
   await servicesRepository.createServiceElement(command);
 
-  revalidatePath(revaidatePagePath);
+  revalidatePath(revalidatePagePath);
 };

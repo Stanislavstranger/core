@@ -1,14 +1,5 @@
-export type ServiceListElement = {
-  id: string;
-  name: string;
-  description: string;
-};
+import { Service } from '@prisma/client';
 
-export type CreateServiceListElementCommand = {
-  name: string;
-  description: string;
-};
-
-export type DeleteServiceListElementCommand = {
-  id: string;
-};
+export type ServiceListElement = Service;
+export type CreateServiceListElementCommand = Pick<ServiceListElement, 'name' | 'description'>;
+export type DeleteServiceListElementCommand = Pick<ServiceListElement, 'id'>;
