@@ -1,14 +1,18 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { CreateServiceListElementCommand } from './model/types';
 import { servicesRepository } from './services.repository';
+import { captureServer } from '@/shared/lib/exceptionless';
+import type { CreateServiceListElementCommand } from './model/types';
 
 export const createServiceAction = async (
   revalidatePagePath: string,
   command: CreateServiceListElementCommand,
-) => {
-  await servicesRepository.createServiceElement(command);
-
-  revalidatePath(revalidatePagePath);
-};
+) =>
+  captureServer(
+    async () => {
+      await servicesRepository.createServiceElement(command);
+      revalidatePath(revalidatePagePath);
+    },
+    { op: 'createService', revalidatePagePath },
+  );
